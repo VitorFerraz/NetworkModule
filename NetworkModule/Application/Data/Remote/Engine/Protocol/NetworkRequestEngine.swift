@@ -1,5 +1,5 @@
 //
-//  NetworkEngine.swift
+//  NetworkRequestEngine.swift
 //  NetworkModule
 //
 //  Created by Vitor Ferraz Varela on 06/08/19.
@@ -7,7 +7,7 @@
 //
 
 import Moya
-protocol NetworkEngine {
+protocol NetworkRequestEngine {
     func request(completion: @escaping(Result<Data>) -> Void)
 }
 

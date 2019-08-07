@@ -8,12 +8,12 @@
 
 import Reachability
 
-final class ReachabilityEngine: NetworkEngine {
+final class ReachabilityEngine: NetworkRequestEngine {
 
     typealias Target = Service
     private let reachability: Reachability?
-    private let engine: NetworkEngine
-    init(reachability: Reachability? = Reachability(), engine: NetworkEngine) {
+    private let engine: NetworkRequestEngine
+    init(reachability: Reachability? = Reachability(), engine: NetworkRequestEngine) {
         self.reachability = reachability
         self.engine = engine
     }

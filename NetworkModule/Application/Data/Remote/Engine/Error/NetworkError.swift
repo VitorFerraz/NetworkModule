@@ -10,7 +10,7 @@ import Foundation
 enum NetworkError: Error {
     case custom(String)
     case ameDigitalError(ameDigitalError: AmeDigitalError)
-    case unknown(String)
+    case unknown
     case noConnection
     case serverError
     case parserError
