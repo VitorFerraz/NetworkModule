@@ -20,37 +20,37 @@ final class RefreshTokenEngine<Target: Service> {
         //TODO: Add repository to handle refresh token
     }
 }
-extension RefreshTokenEngine: NetworkRequestEngine {
-    
-    func request(completion: @escaping (Result<Data>) -> Void) {
-        provider.request(target) { (result) in
-            switch result {
-            case .failure(let error):
-                let statusCode = result.value?.statusCode ?? (error as NSError).code
-                switch statusCode {
-                case 401:
-                    self.refreshToken(completion: { (result) in
-                        switch result {
-                        case .error(let error):
-                            return completion(.error(error))
-                        case .success:
-                            self.provider.request(self.target, completion: { (result) in
-                                if let data = result.value?.data {
-                                    return completion(.success(data))
-                                }
-                                return completion(.error(NetworkError.unknown))
-                            })
-                        }
-                    })
-                default:
-                    if let data = result.value?.data, let ameDigitalError = try? self.target.decoder.decode(AmeDigitalError.self, from: data) {
-                        return completion(.error(NetworkError.ameDigitalError(ameDigitalError: ameDigitalError)))
-                    }
-                    return completion(.error(NetworkError.unknown))
-                }
-            case .success(let value):
-                return completion(.success(value.data))
-            }
-        }
-    }
-}
+//extension RefreshTokenEngine: NetworkRequestEngine {
+//    
+//    func request(completion: @escaping (Result<Data>) -> Void) {
+//        provider.request(target) { (result) in
+//            switch result {
+//            case .failure(let error):
+//                let statusCode = result.value?.statusCode ?? (error as NSError).code
+//                switch statusCode {
+//                case 401:
+//                    self.refreshToken(completion: { (result) in
+//                        switch result {
+//                        case .error(let error):
+//                            return completion(.error(error))
+//                        case .success:
+//                            self.provider.request(self.target, completion: { (result) in
+//                                if let data = result.value?.data {
+//                                    return completion(.success(data))
+//                                }
+//                                return completion(.error(NetworkError.unknown))
+//                            })
+//                        }
+//                    })
+//                default:
+//                    if let data = result.value?.data, let ameDigitalError = try? self.target.decoder.decode(AmeDigitalError.self, from: data) {
+//                        return completion(.error(NetworkError.ameDigitalError(ameDigitalError: ameDigitalError)))
+//                    }
+//                    return completion(.error(NetworkError.unknown))
+//                }
+//            case .success(let value):
+//                return completion(.success(value.data))
+//            }
+//        }
+//    }
+//}

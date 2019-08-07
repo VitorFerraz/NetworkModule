@@ -7,22 +7,21 @@
 //
 
 import Reachability
+import Moya
 
 final class ReachabilityEngine: NetworkRequestEngine {
 
-    typealias Target = Service
-    private let reachability: Reachability?
     private let engine: NetworkRequestEngine
+    private let reachability: Reachability?
     init(reachability: Reachability? = Reachability(), engine: NetworkRequestEngine) {
         self.reachability = reachability
         self.engine = engine
     }
 
-    func request(completion: @escaping (Result<Data>) -> Void) {
-        if reachability?.connection == .none {
+    func request<T>(target: TargetType, completion: @escaping (Result<T>) -> Void) where T : DTO {
+        if let connection = reachability?.connection, connection == .none {
             return completion(.error(NetworkError.noConnection))
         }
-
-        engine.request(completion: completion)
+        return engine.request(target: target, completion: completion)
     }
 }

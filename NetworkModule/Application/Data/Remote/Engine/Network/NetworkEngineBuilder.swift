@@ -10,14 +10,24 @@ import Moya
 final class NetworkEngineBuilder<Target: Service> {
     
     private var provider: MoyaProvider<Target>
-    let target: Target
+    private var engine: NetworkRequestEngine
     
-    init(target:Target, provider: MoyaProvider<Target>) {
+    init(provider: MoyaProvider<Target>) {
         self.provider = provider
-        self.target = target
+        engine = NetworkDecoderEngine(provider: provider)
     }
     
-    func request<T: DTO>(completion: @escaping (Result<T>) -> Void) {
-       
+    func withErrorHandler() -> Self {
+        engine = ErrorHandlerEngine(provider: provider, engine: engine)
+        return self
+    }
+
+    func withReachability() -> Self {
+        engine = ReachabilityEngine(engine: engine)
+        return self
+    }
+
+    func build() -> NetworkRequestEngine {
+        return engine
     }
 }

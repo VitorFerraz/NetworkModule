@@ -8,6 +8,6 @@
 
 import Moya
 protocol NetworkRequestEngine {
-    func request(completion: @escaping(Result<Data>) -> Void)
+    func request<T: DTO>(target: TargetType, completion: @escaping(Result<T>) -> Void)
 }
 

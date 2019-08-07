@@ -10,7 +10,6 @@ import Moya
 
 protocol Service: TargetType, AccessTokenAuthorizable {
     var authPlugin: AccessTokenPlugin { get }
-    var decoder: JSONDecoder { get }
 }
 
 extension Service {
@@ -33,4 +32,11 @@ extension Service {
     var decoder: JSONDecoder {
         return JSONDecoder()
     }
+}
+
+extension TargetType {
+    var decoder: JSONDecoder {
+        return JSONDecoder()
+    }
+
 }
