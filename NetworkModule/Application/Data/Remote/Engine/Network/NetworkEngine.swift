@@ -11,7 +11,7 @@ final class NetworkEngine<Target: Service> {
     private var engine: NetworkRequestEngine
 
     init(provider: MoyaProvider<Target>) {
-        engine = NetworkEngineBuilder(provider: provider).withErrorHandler().withReachability().build()
+        engine = NetworkEngineBuilder(provider: provider).withErrorHandler().withRefreshToken().withReachability().build()
     }
 }
 extension NetworkEngine: NetworkRequestEngine {

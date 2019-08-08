@@ -37,4 +37,10 @@ final class NetworkDecoderEngine<Target: Service>: NetworkRequestEngine {
 
     }
 
+    func update(token: String) {
+        let authPlugin = AccessTokenPlugin { () -> String in
+            return token
+        }
+        provider = ProviderBuilder().build(authPlugin)
+    }
 }

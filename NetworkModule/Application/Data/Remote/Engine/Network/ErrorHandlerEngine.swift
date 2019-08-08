@@ -35,7 +35,7 @@ final class ErrorHandlerEngine<Target: Service>: NetworkRequestEngine {
                     if let data = result.value?.data, let ameDigitalError = try? target.decoder.decode(AmeDigitalError.self, from: data) {
                         return completion(.error(NetworkError.ameDigitalError(ameDigitalError: ameDigitalError)))
                     }
-                    return completion(.error(NetworkError.unknown))
+                    return self.engine.request(target: target, completion: completion)
                 }
             case .success(let value):
                 //Use to handle when the status code 500 is needed to create a custom error

@@ -27,6 +27,11 @@ final class NetworkEngineBuilder<Target: Service> {
         return self
     }
 
+    func withRefreshToken() -> Self {
+        engine = RefreshTokenEngine(provider: provider, engine: engine)
+        return self
+    }
+
     func build() -> NetworkRequestEngine {
         return engine
     }

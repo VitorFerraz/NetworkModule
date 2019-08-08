@@ -9,5 +9,10 @@
 import Moya
 protocol NetworkRequestEngine {
     func request<T: DTO>(target: TargetType, completion: @escaping(Result<T>) -> Void)
+    func update(token: String)
+}
+
+extension NetworkRequestEngine {
+    func update(token: String) {}
 }
 
