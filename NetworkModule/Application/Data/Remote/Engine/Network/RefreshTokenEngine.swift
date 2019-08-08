@@ -16,7 +16,7 @@ final class RefreshTokenEngine<Target: Service>: NetworkRequestEngine {
     init(provider: MoyaProvider<Target>, engine: NetworkRequestEngine) {
         self.provider = provider
         self.engine = engine
-        self.newEngine = NetworkEngineBuilder(provider: self.provider).withErrorHandler().withRefreshToken().withReachability().build()
+        self.newEngine = NetworkEngineBuilder(provider: self.provider).withReachability().build()
     }
 
     func request<T>(target: TargetType, completion: @escaping (Result<T>) -> Void) where T : DTO {
@@ -30,7 +30,8 @@ final class RefreshTokenEngine<Target: Service>: NetworkRequestEngine {
             }
             switch statusCode {
             case 404:
-                return completion(.error(NetworkError.custom("Refresh token")))
+//                return completion(.error(NetworkError.custom("Refresh token")))
+                return self.refresh(target: target, completion: completion)
             default:
               return self.engine.request(target: target, completion: completion)
             }
